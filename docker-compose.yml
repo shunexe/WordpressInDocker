@@ -1,0 +1,32 @@
+version: "3"
+services:
+  app:
+    container_name: wordpress_app
+    image: wordpress
+    ports:
+      - 8080:80
+    volumes:
+      - "./wordpress:/var/www/html"
+    networks:
+      - wordpressindocker_default
+  db:
+    container_name: mysql
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - wordpressindocker_default
+  phpmyadmin:
+    container_name: wordpress_phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8888:80
+    networks:
+      - wordpressindocker_default
+volumes:
+  db-data:
+
+networks:
+  wordpressindocker_default:
